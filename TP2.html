@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        #app{
+            text-align: center;
+        }
+        .a{
+            padding: 2%;
+            align-items: center;
+            display: flex;
+            width: 250px;
+            height: 50px;
+            margin: 0 auto;
+            border: 1px solid black;
+            justify-content:center;
+        }
+        .btn{
+            margin-left: 4%;
+            height: auto;
+            background: white;
+            color: blue;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        Ex1
+       <component-random></component-random>
+       Ex2
+       <component-2></component-2>
+       Ex3
+       <component-3></component-3>
+    </div>
+    
+    <script>
+        const componentrandom= {
+            props:['texts','delete'],
+            data(){
+                return{
+                    id:0,
+                    text:"",
+                    deletes:'',
+                }
+            },
+            mounted() {
+                this.deletes = this.delete
+            },
+            $emit:['clicked-x'],
+            methods:{
+                popUp(){
+                    alert("I'm some random text")
+                    this.text="I'm some random text";
+                },
+                deleteFunction(){
+                    this.$emit("clicked-x");
+                }
+            },
+            template:`
+            <div>
+                <div v-if="!deletes" class="a">
+                    <span>{{text}}{{texts}}</span>
+                    <button class="btn" v-on:click="popUp()">Click me</button>
+                </div>
+                <div v-else class="a">
+                    <span>{{text}}{{texts}}</span>
+                    <button class="btn"  v-on:click="deleteFunction()">Delete</button>
+                </div>
+            </div>
+            
+            `
+        }
+        const component2 = {
+            props:['delete'],
+            data(){
+                return{
+                    index:[{
+                    id:1,
+                    text:"hello",
+                },
+                {
+                    id:2,
+                    text:"helloHi",
+                },
+                {
+                    id:3,
+                    text:"Naraku",
+                },
+                ],
+                deletes:'',
+                }
+            },
+            mounted() {
+                this.deletes=this.delete
+            },
+            methods:{
+                removeDom(item){
+                    this.index.splice(this.index.indexOf(item),1);
+                }
+            },
+            components:{
+                "component-random":componentrandom,
+            },
+            template:`
+               <div>
+               <div v-if="!deletes">
+                <div v-for=" i in index">
+                    <component-random :texts="i.text"></component-random>
+                </div>
+               </div>
+                <div v-else>
+                    <div v-for=" i in index">
+                        <component-random @clicked-x="removeDom(i)" delete="delete" :texts="i.text"></component-random>
+                    </div>
+                </div>
+               </div>
+                `
+
+        }
+        const component3 = {
+
+            components:{
+                "component-2":component2,
+            },
+            template:`<component-2 delete="delete"></component-2>`
+        }
+        const app = Vue.createApp({
+            components:{
+                "component-random":componentrandom,
+                "component-2":component2,
+                "component-3":component3,
+            }
+        }).mount("#app")
+
+    </script>
+</body>
+
+</html>
