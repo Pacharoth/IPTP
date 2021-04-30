@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Awesome Calculator</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./assets/css/index.css">
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div class="container">
+    <table>
+      <tr>
+        <td colspan="5">
+          <div id="screen">
+            <span id="screen_top">M={{f}}</span>
+            <div id="screen_bottom">
+              <span id="operand1" v-if="a.length > 6">support only 6 digit</span>
+              <!-- u can use v-show -->
+              <span id="operand1" v-else>{{a}}</span>
+              <!-- <span id="operand1">Calculator only support 6 digit!</span> -->
+              
+              <span id="operator"></span>
+              <span id="operand2"></span>
+            </div>
+            <!-- <span id="screen_bottom">0</span> -->
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="button" class="btn btn-warning" v-on:click="clearMemory()">MC</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-warning" v-on:click="outputMemory()">MR</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-warning" v-on:click="substractMemory()">M-</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-warning" v-on:click="storeMemory()">M+</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="button" class="btn btn-light" v-on:click="displayOutput(7)">7</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light" v-on:click="displayOutput(8)">8</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light" v-on:click="displayOutput(9)">9</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-secondary" >÷</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light">+/-</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="button" class="btn btn-light" v-on:click="displayOutput(4)">4</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light" v-on:click="displayOutput(5)">5</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light" v-on:click="displayOutput(6)">6</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-secondary">x</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-secondary">-</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="button" class="btn btn-light" v-on:click="displayOutput(1)">1</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light" v-on:click="displayOutput(2)">2</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light" v-on:click="displayOutput(3)">3</button>
+        </td>
+        <td rowspan="2">
+          <button type="button" class="btn btn-secondary long-btn">+</button>
+        </td>
+        <td rowspan="2">
+          <button type="button" class="btn btn-primary long-btn">=</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="button" class="btn btn-danger" v-on:click="clearOutput()">C</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light" v-on:click="displayOutput('0')">0</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light">.</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="alert alert-danger" id="message_panel" role="alert">
+    something wrong here
+  </div>
+  <script>
+    const Calculation={
+      data(){
+        return{
+          a:"0",
+          f:"0",
+          p:"0",
+        }
+      },
+      methods:{
+        displayOutput(n){
+            if(this.a[0]=="0")
+                this.a = n;
+            else
+                this.a +=`${n}`;
+        },
+        clearOutput(){
+          this.a = "0";
+        },
+        storeMemory(){
+            this.f= Number(this.f)+Number(this.a);
+            this.a="0";
+        },
+        outputMemory(){
+            this.a=this.f;
+        },
+        substractMemory(){
+            this.f = Number(this.f)-Number(this.a)
+            this.a="0";
+        },
+        clearMemory(){
+            this.f = "0";
+        }
+      }
+    }
+    Vue.createApp(Calculation).mount('.container');
+  </script>
+</body>
+</html>
