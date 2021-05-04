@@ -1,6 +1,6 @@
 <template>
     <div class="content-all" >
-        <template v-for="todo in todoe" :key="todo.id">
+        <template v-for="todo in todoe.reverse()" :key="todo.id">
              <todo-item :id="todo.id" :status="todo.status" :task="todo.task" @change-status="changeToStatus(todo.id)" @onDelete-item="deleteItem(todo.id)"/>
         </template>
        <template v-if="pending">
