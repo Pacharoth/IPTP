@@ -1,10 +1,19 @@
 <template>
   <div class="app">
+    <h2 class="fw-bold">I am the root component</h2>
+    <div class="content">
+      <shape name="Traingle" color="blue"/>
+      <shape name="Hexagone" color="yellow"/>
+      <shape name="Star" color="grey"/>
+      <shape name="Diamond" color="green"/>
+      <shape name="Heart" color="red"/>
+    </div>
   </div>
 
 </template>
 
 <script>
+import Shape from './components/Shape.vue'
 export default {
   title:'Shape App',
   name: 'App',
@@ -15,6 +24,7 @@ export default {
     }
   },
   components:{
+    Shape
   },
   methods:{
   }
@@ -39,8 +49,19 @@ body{
   background-color: #eeee;
   height: 100%;
   width: 100%;
+
+}
+.app{
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.content{
+  display: flex;
+  width: 100%;
+  align-items: center;
   justify-content: center;
 }
-
 </style>
