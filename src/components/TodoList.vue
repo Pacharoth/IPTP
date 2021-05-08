@@ -1,6 +1,6 @@
 <template>
     <div class="content-all" >
-        <template v-for="todo in todoe.reverse()" :key="todo.id">
+        <template v-for="todo in todoe" :key="todo.id">
              <todo-item :id="todo.id" :status="todo.status" :task="todo.task" @change-status="changeToStatus(todo.id)" @onDelete-item="deleteItem(todo.id)"/>
         </template>
        <template v-if="pending">
@@ -26,7 +26,7 @@ export default {
         }
     },
     mounted(){
-        this.todoe=this.todos;
+        this.todoe=this.todos;  
     },
     emits:['onDelete-items','onStatus'],
     methods:{
