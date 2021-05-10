@@ -1,19 +1,29 @@
 <template>
   <div class="app">
     {{p.hello}}
+    {{count}} <button class="btn" @click="increment">increment</button>
   </div>
 
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
+//I use composition because it is quite easy
+import { ref } from '@vue/reactivity';
+import {useStore} from 'vuex';
+import { computed } from '@vue/runtime-core';
 export default {
   title:'Social Media',
   name: 'App',
   setup(){
     const p = ref({hello:"world"});
+    const store = useStore();
+    let count = ref(0);
+    
     return{
+      increment:()=>count.value++,
+      count:count,
       p:p,
+      posts:computed(()=>store.getters['chat/getPosts'])
     }
   },
   components:{

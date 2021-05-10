@@ -11,4 +11,5 @@ app.mixin({
     }
 });
 app.use(store);
-app.mount('#app')
+app.mount('#app');
+
