@@ -1,17 +1,19 @@
 <template>
   <div class="app">
+    {{p.hello}}
   </div>
 
 </template>
 
 <script>
+import { ref } from '@vue/reactivity'
 export default {
   title:'Social Media',
   name: 'App',
-  data(){
+  setup(){
+    const p = ref({hello:"world"});
     return{
-      todos:[],
-      task:"",
+      p:p,
     }
   },
   components:{
