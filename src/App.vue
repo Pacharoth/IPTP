@@ -1,21 +1,12 @@
 <template>
   <div class="app">
-    <h2 class="fw-bold">I am the root component</h2>
-    <div class="content">
-      <shape name="Traingle" color="blue"/>
-      <shape name="Hexagone" color="yellow"/>
-      <shape name="Star" color="grey"/>
-      <shape name="Diamond" color="green"/>
-      <shape name="Heart" color="red"/>
-    </div>
   </div>
 
 </template>
 
 <script>
-import Shape from './components/Shape.vue'
 export default {
-  title:'Shape App',
+  title:'Social Media',
   name: 'App',
   data(){
     return{
@@ -24,7 +15,6 @@ export default {
     }
   },
   components:{
-    Shape
   },
   methods:{
   }
