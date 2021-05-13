@@ -1,5 +1,7 @@
 <template>
-    
+    <div class="comment-content">
+        
+    </div>
 </template>
 <script>
 export default {

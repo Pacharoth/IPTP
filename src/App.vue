@@ -1,32 +1,27 @@
 <template>
   <div class="app">
-    {{p.hello}}
-    {{count}} <button class="btn" @click="increment">increment</button>
+    <add-post/>
+    <post/>
   </div>
 
 </template>
 
 <script>
+import AddPost from './components/AddPost.vue'
+import Post from './components/Post.vue'
 //I use composition because it is quite easy
-import { ref } from '@vue/reactivity';
-import {useStore} from 'vuex';
-import { computed } from '@vue/runtime-core';
 export default {
   title:'Social Media',
   name: 'App',
+  
   setup(){
-    const p = ref({hello:"world"});
-    const store = useStore();
-    let count = ref(0);
     
     return{
-      increment:()=>count.value++,
-      count:count,
-      p:p,
-      posts:computed(()=>store.getters['chat/getPosts'])
     }
   },
   components:{
+    AddPost,
+    Post
   },
   methods:{
   }
@@ -66,4 +61,22 @@ body{
   align-items: center;
   justify-content: center;
 }
+    ::-webkit-scrollbar{
+        width: 10px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+/* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+        /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 </style>
