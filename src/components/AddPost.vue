@@ -1,22 +1,57 @@
 <template>
-    <div class="add-form">
+    <form method="POST" class="add-form" @submit.prevent="postSocialMedia">
         <div class="a-form">
             <img src="../assets/logo.png" class="avatar" alt="">
             <div class="content-avatar">
-                <h5 class="fw-bold text">Pacharoth Roeun</h5>
-                <h6 class="fw-bold">12 May 2020</h6>
+                <h5 class="fw-bold text">{{user.name}}</h5>
+                <h6 class="fw-bold">{{date}}</h6>
             </div>
         </div>
-        <textarea type="text" class="form-control post-add" placeholder="What is on your mind?"></textarea>
+        <textarea v-model="data" type="text" class="form-control post-add" placeholder="What is on your mind?"></textarea>
         <div class="button">
             <button class="btn post">Post</button>
 
         </div>
-    </div>
+    </form>
 </template>
 <script>
+import { computed, onMounted, ref, toRefs} from '@vue/runtime-core';
+import {useStore} from 'vuex';
+import {getAllDate} from '../utils/GetDate'
 export default {
     name:"AddPost",
+    props:{
+        userid:{
+            type:String,
+        }
+    },
+    setup(props){
+        const {userid} = toRefs(props)
+        const store = useStore();
+        const date =ref();
+        var data =ref();
+        const user = computed(()=>store.getters['post/getUserById'](userid.value));
+        function postSocialMedia(){
+            const{id} =user.value;
+            const idPost = store.getters['post/getPosts'].length+1;
+            store.dispatch('post/addPost',{postBy:id,content:data.value,id:idPost,postAt:getAllDate()});
+            data.value = ""
+
+        }
+        onMounted(()=>{
+            function interval(){
+                setInterval(()=>date.value=getAllDate(),1000);
+            }
+            interval();
+            return clearInterval(interval);
+        })
+        return{
+            user,
+            date,
+            data,
+            postSocialMedia,
+        }
+    }
 }
 </script>
 <style scoped>
@@ -88,7 +123,7 @@ export default {
         display: flex;
         align-items: center;
         width: 40%;
-        justify-content: space-between;
+
         padding: 1%;
         margin-bottom: 1%;
 
@@ -102,6 +137,7 @@ export default {
         margin-right: 1%;
     }
     .content-avatar{
+        margin-left: 10%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;

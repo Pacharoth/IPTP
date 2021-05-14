@@ -1,32 +1,44 @@
 <template>
-    <div class="comment-content">
+    <div class="comment-content" v-for="comments in comment" :key="comments">
         <div class="avatar">
             <img src="../assets/logo.png" class="pic-avatar" alt="">
             <div class="text-name">
-                <h6 class="fw-bold">Roeun Pacharoth</h6>
-                <span class="fw-bold"> 27 Jan 2020</span>
+                <h6 class="fw-bold">{{comments.user.name}}</h6>
+                <span class="fw-bold"> {{comments.comment.commentAt}}</span>
             </div>
         </div>
         <div class="content-text">
-            <span class="content-comment2">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
+            <span class="content-comment2">{{comments.comment.content}}</span>
         </div>
-        <form class="comment-container">
-            <img src="../assets/logo.png" class="pic-avatar" alt="">
-            <input type="text" class="form-control comment" placeholder="Write a comment">
-        </form>
     </div>
 </template>
 <script>
+import { computed, onMounted, toRefs} from '@vue/runtime-core'
+import { useStore } from 'vuex';
 export default {
     name:'Comment',
-    setup(){
-
+    props:{
+        postid:{
+            type:Number,
+        },
+    },
+    setup(props){
+        const store=useStore();
+        const {postid} = toRefs(props);
+        const comment = computed(()=>store.getters['post/getCommentPost'](postid.value));
+       onMounted(()=>{
+           console.log(postid.value)
+       })
+       return{
+           comment,
+       }
     }
 }
 </script>
 <style scoped>
 
     .comment-content{
+        margin-top: 2%;
         border:1px solid rgba(126, 121, 121, 0.445);
         padding: 2%;
         border-radius: 10px;

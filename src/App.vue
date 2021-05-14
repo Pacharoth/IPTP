@@ -1,7 +1,7 @@
 <template>
   <div class="app">
-    <add-post/>
-    <post/>
+    <add-post :userid="userId"/>
+    <post :userid="userId"/>
   </div>
 
 </template>
@@ -15,8 +15,9 @@ export default {
   name: 'App',
   
   setup(){
-    
+    const userId="kwf"
     return{
+      userId
     }
   },
   components:{
