@@ -39,17 +39,19 @@ export default {
         const {userid} = toRefs(props)
         const store= useStore();
         const post = computed(()=>store.getters['post/getAllPost'])
-        const comment = ref();
+        const comment = ref("");
         function commentPost(id){
-            store.dispatch('post/addComment',
-            {
-                content:comment.value,
-                id:computed(()=>store.getters['post/countComment']).value+1,
-                commentAt:getAllDate(),
-                postid:id,
-                commentedBy:userid.value,
-            })
-            comment.value="";
+            if(comment.value!==""){
+                store.dispatch('post/addComment',
+                {
+                    content:comment.value,
+                    id:computed(()=>store.getters['post/countComment']).value+1,
+                    commentAt:getAllDate(),
+                    postid:id,
+                    commentedBy:userid.value,
+                })
+                comment.value="";
+            }
         }
         onMounted(()=>{
             console.log("mounted");
